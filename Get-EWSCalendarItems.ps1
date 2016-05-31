@@ -9,6 +9,19 @@ PARAM(
     [int]$ResultSize
 )
 
+<# Key parts, below is an example removed unnecessary lines
+Import-Module .\Microsoft.Exchange.WebServices.dll
+$ExchangeVersion = [Microsoft.Exchange.WebServices.Data.ExchangeVersion]::Exchange2013
+$Service = New-Object Microsoft.Exchange.WebServices.Data.ExchangeService($ExchangeVersion)
+$FolderID = New-Object Microsoft.Exchange.WebServices.Data.FolderId([Microsoft.Exchange.WebServices.Data.WellKnownFolderName]::Calendar, 'larry@consoto.com')
+$StartTime = [datetime]'2016-02-22'
+$EndTime = [datetime]'2016-03-33'
+$CalendarView = New-Object Microsoft.Exchange.WebServices.Data.CalendarView('2016-02-22', $EndTime)
+$Service.AutodiscoverUrl($MailAddress)
+$Calendar = [Microsoft.Exchange.WebServices.Data.Folder]::Bind($Service, $FolderID)
+$Service.FindAppointments($Calendar.Id, $CalendarView)
+#>
+
 Set-Location (Get-Item ($MyInvocation.MyCommand.Definition)).DirectoryName
 
 if(Import-Module .\Microsoft.Exchange.WebServices.dll -ErrorAction:SilentlyContinue)
